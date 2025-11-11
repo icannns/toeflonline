@@ -1,0 +1,78 @@
+/* src/components/CertificatePage.css */
+
+.certificate-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background-color: #f4f7f6;
+  font-family: 'Georgia', serif; /* Font klasik untuk sertifikat */
+}
+
+.certificate-border {
+  width: 100%;
+  max-width: 800px;
+  border: 10px solid #3D52A0; /* Bingkai biru tua */
+  padding: 2rem;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-content {
+  border: 2px solid #7091E6; /* Bingkai dalam biru muda */
+  padding: 3rem;
+  text-align: center;
+}
+
+.certificate-sub {
+  font-size: 1.5rem;
+  color: #555;
+  letter-spacing: 1px;
+}
+
+.certificate-title {
+  font-size: 3rem;
+  color: #3D52A0;
+  margin: 1rem 0;
+  font-weight: 700;
+}
+
+.certificate-text {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 1.5rem 0 0.5rem 0;
+  display: block;
+}
+
+.certificate-name {
+  font-size: 2.5rem;
+  color: #18D26E; /* Hijau aksen */
+  font-weight: 700;
+  margin: 0.5rem 0;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.certificate-course {
+  font-size: 2rem;
+  color: #333;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+/* ▼▼▼ STYLE BARU UNTUK SKOR ▼▼▼ */
+.certificate-score {
+  font-size: 2.5rem;
+  color: #3D52A0; /* Biru tua agar serasi */
+  font-weight: 700;
+  margin: 0.5rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+}
+
+.certificate-date {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 2.5rem;
+  display: block;
+}

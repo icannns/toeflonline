@@ -1,0 +1,107 @@
+/* src/components/Quiz.css */
+
+.quiz-container {
+  margin-top: 2rem;
+  border-top: 2px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.question-block-quiz {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.question-text-quiz {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2C2C2C;
+  margin-bottom: 1rem;
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-label {
+  font-size: 1rem;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.option-label input[type="radio"] {
+  /* Style radio button kustom jika diinginkan */
+}
+
+.option-label:hover {
+  background-color: #f9f9f9;
+}
+
+.submit-quiz-button {
+  text-decoration: none;
+  color: #fff;
+  background-color: #18D26E;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-quiz-button:hover {
+  background-color: #15b35e;
+}
+
+/* Hasil Skor */
+.quiz-results {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f4f7f6;
+  border-radius: 12px;
+}
+
+.quiz-results h3 {
+  font-size: 1.8rem;
+  color: #3D52A0;
+  margin-top: 0;
+}
+
+.score-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.score-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #18D26E;
+}
+
+.certificate-button {
+  text-decoration: none;
+  color: #fff;
+  background-color: #3D52A0; /* Biru */
+  padding: 0.8rem 1.8rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+.certificate-button:hover {
+  background-color: #314380;
+  transform: translateY(-2px);
+}

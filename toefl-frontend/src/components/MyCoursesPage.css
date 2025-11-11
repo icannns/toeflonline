@@ -1,0 +1,94 @@
+/* src/components/MyCoursesPage.css */
+
+/* Menggunakan style yang mirip dengan CourseList.css */
+.my-courses-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 5%;
+}
+
+.my-courses-container h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2C2C2C;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.loading-message {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+  padding: 4rem;
+}
+
+.empty-message {
+  font-size: 1.1rem;
+  color: #555;
+  text-align: center;
+  padding: 3rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.course-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-category {
+  background-color: #EBF4FF;
+  color: #3D52A0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+  align-self: flex-start;
+}
+
+.course-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.course-card p {
+  font-size: 0.95rem;
+  color: #555;
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+/* Mengganti warna tombol */
+.continue-button {
+  text-decoration: none;
+  color: #fff;
+  background-color: #3D52A0; /* Biru tua */
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.continue-button:hover {
+  background-color: #314380;
+}
