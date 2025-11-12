@@ -1,0 +1,212 @@
+# api-gateway/swagger.yaml
+
+openapi: 3.0.0
+info:
+  title: TOEFL Online API Gateway
+  version: 1.0.0
+  description: Dokumentasi terpusat untuk semua layanan (User, Course, Enrollment, Assessment) melalui API Gateway.
+servers:
+  - url: http://localhost:8000
+    description: Local API Gateway (Frontend memanggil ini)
+
+# Definisi skema keamanan (JWT)
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+# Grup tag agar rapi
+tags:
+  - name: User Service
+    description: Endpoint untuk otentikasi (registrasi, login, update profile).
+  - name: Course Service
+    description: Endpoint untuk melihat materi dan daftar kursus.
+  - name: Enrollment Service
+    description: Endpoint untuk mendaftar/membatalkan kursus (membutuhkan otentikasi).
+  - name: Assessment Service
+    description: Endpoint untuk mengambil soal kuis (membutuhkan otentikasi).
+
+paths:
+  # --- User Service (Port 3002) ---
+  /api/users/register:
+    post:
+      tags: [User Service]
+      summary: Registrasi pengguna baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: ican
+                email:
+                  type: string
+                  example: ican@gmail.com
+                password:
+                  type: string
+                  example: '123456'
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Input tidak valid
+        '409':
+          description: Email or username already exists
+  
+  /api/users/login:
+    post:
+      tags: [User Service]
+      summary: Login pengguna
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: ican@gmail.com
+                password:
+                  type: string
+                  example: '123456'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Invalid email or password
+
+  /api/users/profile:
+    put:
+      tags: [User Service]
+      summary: Update username pengguna (Perlu Login)
+      security:
+        - BearerAuth: [] # Menandakan endpoint ini butuh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newUsername:
+                  type: string
+                  example: ican_baru
+      responses:
+        '200':
+          description: Profile updated successfully
+        '401':
+          description: Token required
+        '409':
+          description: Username already taken
+
+  # --- Course Service (Port 3001) ---
+  /api/courses:
+    get:
+      tags: [Course Service]
+      summary: Mendapatkan semua daftar kursus
+      responses:
+        '200':
+          description: Daftar semua kursus
+  
+  /api/courses/{id}:
+    get:
+      tags: [Course Service]
+      summary: Mendapatkan detail satu kursus
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Detail kursus
+        '404':
+          description: Course not found
+
+  # --- Enrollment Service (Port 3003) ---
+  /api/enrollments/enroll:
+    post:
+      tags: [Enrollment Service]
+      summary: Mendaftarkan pengguna ke kursus (Perlu Login)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                courseId:
+                  type: integer
+                  example: 1
+      responses:
+        '201':
+          description: Enrolled successfully
+        '401':
+          description: Token required
+        '409':
+          description: You are already enrolled
+
+  /api/enrollments/my-courses:
+    get:
+      tags: [Enrollment Service]
+      summary: Mendapatkan semua kursus yang diambil pengguna (Perlu Login)
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Daftar kursus yang diambil
+        '401':
+          description: Token required
+
+  /api/enrollments/course/{courseId}:
+    delete:
+      tags: [Enrollment Service]
+      summary: Un-enroll (membatalkan) kursus (Perlu Login)
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Un-enrolled successfully
+        '404':
+          description: Enrollment not found
+
+  # --- Assessment Service (Port 3004) ---
+  /api/assessment/quiz/{courseId}:
+    get:
+      tags: [Assessment Service]
+      summary: Mendapatkan soal kuis untuk kursus (Perlu Login)
+      security:
+        - BearerAuth: [] # (Secara teknis, ini dilindungi oleh frontend)
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Daftar soal kuis
+        '500':
+          description: Gagal mengambil soal

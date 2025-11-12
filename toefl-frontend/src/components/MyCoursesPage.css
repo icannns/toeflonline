@@ -92,3 +92,30 @@
 .continue-button:hover {
   background-color: #314380;
 }
+
+/* src/components/MyCoursesPage.css (Tambahkan di bagian bawah) */
+
+/* Buat grup tombol */
+.card-buttons {
+  display: flex;
+  gap: 1rem; /* Jarak antar tombol */
+  margin-top: auto; /* Mendorong tombol ke bawah */
+}
+
+/* Atur ulang tombol agar lebarnya fleksibel */
+.continue-button,
+.unenroll-button {
+  flex: 1; /* Bagirata lebar */
+  padding: 0.7rem 0.5rem; /* Sedikit kurangi padding horizontal */
+}
+
+/* Tombol Un-enroll (Merah) */
+.unenroll-button {
+  background-color: #D9534F; /* Merah */
+  border: none;
+  cursor: pointer;
+}
+
+.unenroll-button:hover {
+  background-color: #c9302c;
+}

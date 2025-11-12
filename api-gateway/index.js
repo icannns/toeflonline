@@ -1,15 +1,26 @@
-// api-gateway/index.js
+// index.js (api-gateway)
 
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const cors = require('cors');
+
+// ▼▼▼ IMPOR PAKET BARU ▼▼▼
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml'); // Membaca file
 
 const app = express();
 const port = 8000;
 
 app.use(cors());
 
-// 1. Proxy untuk User Service (Ini sudah benar)
+// ▼▼▼ TAMBAHKAN ENDPOINT BARU UNTUK DOKUMENTASI ▼▼▼
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+// ---- Konfigurasi Rute Proxy (Tetap Sama) ----
+
+// 1. Proxy untuk User Service (Port 3002)
 app.use('/api/users', createProxyMiddleware({
   target: 'http://localhost:3002',
   changeOrigin: true,
@@ -18,20 +29,16 @@ app.use('/api/users', createProxyMiddleware({
   },
 }));
 
-// 2. Proxy untuk Course Service (INI ADALAH PERBAIKANNYA)
+// 2. Proxy untuk Course Service (Port 3001)
 app.use('/api/courses', createProxyMiddleware({
-  // ▼▼▼ PERUBAHAN DI SINI ▼▼▼
-  target: 'http://localhost:3001/courses', // Pindahkan /courses ke target
+  target: 'http://localhost:3001/courses',
   changeOrigin: true,
   pathRewrite: {
-    '^/api/courses': '', // Hapus /api/courses menjadi string kosong
-    // Alur baru:
-    // GET /api/courses -> target ('.../courses') + path ('') = ...:3001/courses
-    // GET /api/courses/2 -> target ('.../courses') + path ('/2') = ...:3001/courses/2
+    '^/api/courses': '',
   },
 }));
 
-// 3. Proxy untuk Enrollment Service (Ini sudah benar)
+// 3. Proxy untuk Enrollment Service (Port 3003)
 app.use('/api/enrollments', createProxyMiddleware({
   target: 'http://localhost:3003',
   changeOrigin: true,
@@ -40,7 +47,19 @@ app.use('/api/enrollments', createProxyMiddleware({
   },
 }));
 
+// 4. Proxy untuk Assessment Service (Port 3004)
+app.use('/api/assessment', createProxyMiddleware({
+  target: 'http://localhost:3004',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/api/assessment': '',
+  },
+}));
+
 // Jalankan server Gateway
 app.listen(port, () => {
   console.log(`API Gateway running on http://localhost:${port}`);
+  
+  // ▼▼▼ PESAN BARU ▼▼▼
+  console.log(`Swagger Docs available at http://localhost:${port}/api-docs`);
 });

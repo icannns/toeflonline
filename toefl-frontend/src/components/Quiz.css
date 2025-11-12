@@ -105,3 +105,58 @@
   background-color: #314380;
   transform: translateY(-2px);
 }
+
+/* src/components/Quiz.css (Tambahkan di bagian bawah) */
+
+.review-answers-button {
+  text-decoration: none;
+  color: #3D52A0;
+  background-color: transparent;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #3D52A0;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.review-answers-button:hover {
+  background-color: #f4f7f6;
+}
+
+.answer-review-container {
+  margin-top: 2rem;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+}
+
+.review-block {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.review-question {
+  font-weight: 600;
+  color: #333;
+}
+
+.review-answer {
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+}
+
+.review-answer.correct {
+  color: #18D26E; /* Hijau */
+  font-weight: 500;
+}
+
+.review-answer.incorrect {
+  color: #D9534F; /* Merah */
+  font-weight: 500;
+  text-decoration: line-through;
+}

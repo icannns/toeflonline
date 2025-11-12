@@ -4,69 +4,71 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Quiz.css';
 
-// --- Bank Soal ---
+// --- BANK SOAL BARU (ECHOLOCATION) ---
 const quizQuestions = [
   {
     id: 'q1',
-    text: 'The term "e-commerce" refers to...',
+    text: 'What is the primary purpose of echolocation described in the passage?',
     options: {
-      A: 'Selling goods in a physical store',
-      B: 'Buying and selling goods using the internet',
-      C: 'Only transferring money',
-      D: 'All aspects of operating an online business'
+      A: 'To communicate with other animals',
+      B: 'To navigate and find prey in low-light conditions',
+      C: 'To scare away predators',
+      D: 'To detect changes in water temperature'
     },
     correct: 'B'
   },
   {
     id: 'q2',
-    text: 'What does "e-business" refer to?',
+    text: 'The passage states that the sounds emitted for echolocation are often...',
     options: {
-      A: 'Only the transaction of goods',
-      B: 'Only the sale of physical products',
-      C: 'All aspects of operating an online business',
-      D: 'The history of online sales'
+      A: 'Within the range of human hearing',
+      B: 'At a very low frequency',
+      C: 'Ultrasonic, or above the range of human hearing',
+      D: 'A form of visual light wave'
     },
     correct: 'C'
   },
   {
     id: 'q3',
-    text: 'When did the first-ever online sale happen?',
+    text: 'How does an animal build a "sonic map" of its surroundings?',
     options: {
-      A: '1994',
-      B: '2000',
-      C: '1990',
-      D: '2005'
+      A: 'By seeing the sound waves bounce',
+      B: 'By feeling the vibrations in the air',
+      C: 'By processing the time and intensity of returning echoes',
+      D: 'By remembering the path from the previous day'
+    },
+    correct: 'C'
+  },
+  {
+    id: 'q4',
+    text: 'According to the passage, bats can use echolocation to detect...',
+    options: {
+      A: 'Objects as thin as a human hair',
+      B: 'Only large objects like trees',
+      C: 'Colors in the dark',
+      D: 'Buried objects'
     },
     correct: 'A'
   },
   {
-    id: 'q4',
-    text: 'The word "facilitated" in the passage is closest in meaning to...',
-    options: {
-      A: 'stopped',
-      B: 'made easier',
-      C: 'made harder',
-      D: 'discovered'
-    },
-    correct: 'B'
-  },
-  {
     id: 'q5',
-    text: 'E-commerce can describe any kind of commercial transaction that is...',
+    text: 'The passage mentions echolocation as a "powerful example of evolutionary adaptation" because it allows animals to...',
     options: {
-      A: 'done face-to-face',
-      B: 'facilitated through the internet',
-      C: 'only for physical products',
-      D: 'related to marketing'
+      A: 'Rely solely on vision',
+      B: 'Live in any environment on Earth',
+      C: 'Stop using their other senses',
+      D: 'Thrive in niches unavailable to animals that only use vision'
     },
-    correct: 'B'
+    correct: 'D'
   }
 ];
 
 function Quiz({ courseId, courseTitle }) {
   const [answers, setAnswers] = useState({});
-  const [score, setScore] = useState(null);
+  const [score, setScore] = useState(null); // null = kuis belum dikerjakan
+  const [showAnswers, setShowAnswers] = useState(false); // State untuk review jawaban
 
+  // Fungsi untuk menyimpan jawaban user
   const handleAnswerChange = (questionId, optionKey) => {
     setAnswers({
       ...answers,
@@ -74,6 +76,7 @@ function Quiz({ courseId, courseTitle }) {
     });
   };
 
+  // Fungsi untuk menghitung nilai
   const handleSubmitQuiz = (e) => {
     e.preventDefault();
     let correctAnswers = 0;
@@ -84,10 +87,13 @@ function Quiz({ courseId, courseTitle }) {
       }
     }
     
+    // Hitung skor (skala 0-100)
     const newScore = (correctAnswers / quizQuestions.length) * 100;
     setScore(newScore);
+    setShowAnswers(false); // Sembunyikan review jika mengerjakan ulang
   };
 
+  // Tampilkan hasil
   if (score !== null) {
     return (
       <div className="quiz-results">
@@ -95,8 +101,8 @@ function Quiz({ courseId, courseTitle }) {
         <p className="score-text">Your Score: <span className="score-number">{score}%</span></p>
         <p>{score >= 80 ? 'Congratulations! You passed.' : 'You did not pass. Please try again.'}</p>
         
+        {/* Tombol sertifikat HANYA muncul jika nilai >= 80 */}
         {score >= 80 && (
-          // ▼▼▼ PERUBAHAN ADA DI SINI ▼▼▼
           <Link 
             to={`/certificate/${courseId}`} 
             className="certificate-button"
@@ -104,6 +110,35 @@ function Quiz({ courseId, courseTitle }) {
           >
             View Your Certificate
           </Link>
+        )}
+        
+        {/* Tombol untuk review jawaban */}
+        <button onClick={() => setShowAnswers(!showAnswers)} className="review-answers-button">
+          {showAnswers ? 'Hide Answers' : 'Review Answers'}
+        </button>
+        
+        {/* Blok untuk tampilkan jawaban */}
+        {showAnswers && (
+          <div className="answer-review-container">
+            <h4>Answer Key</h4>
+            {quizQuestions.map(q => {
+              const userAnswer = answers[q.id] || 'No Answer';
+              const isCorrect = userAnswer === q.correct;
+              return (
+                <div key={q.id} className="review-block">
+                  <p className="review-question">{q.text}</p>
+                  <p className={`review-answer ${isCorrect ? 'correct' : 'incorrect'}`}>
+                    Your Answer: ({userAnswer}) {q.options[userAnswer] || ''}
+                  </p>
+                  {!isCorrect && (
+                    <p className="review-answer correct">
+                      Correct Answer: ({q.correct}) {q.options[q.correct]}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
     );
@@ -126,7 +161,7 @@ function Quiz({ courseId, courseTitle }) {
                     name={q.id}
                     value={key}
                     onChange={() => handleAnswerChange(q.id, key)}
-                    required
+                    required // Wajib diisi
                   />
                   <span>({key}) {value}</span>
                 </label>

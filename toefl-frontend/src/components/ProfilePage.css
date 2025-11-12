@@ -1,0 +1,87 @@
+/* src/components/ProfilePage.css */
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  background-color: #F9FAFB;
+}
+
+.profile-form {
+  background: #FFFFFF;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 450px;
+}
+
+.profile-form h2 {
+  text-align: center;
+  color: #2C2C2C;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.current-username {
+  font-size: 1.1rem;
+  text-align: center;
+  color: #555;
+  background-color: #f4f7f6;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+}
+
+.update-button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #3D52A0; /* Biru */
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #314380;
+  transform: translateY(-2px);
+}
+
+/* Style untuk pesan sukses/error (reuse dari login) */
+.message {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #D9534F; /* Merah untuk error */
+}
+
+.message.success {
+  color: #18D26E; /* Hijau untuk sukses */
+}

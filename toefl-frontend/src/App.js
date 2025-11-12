@@ -11,7 +11,8 @@ import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
 import MyCoursesPage from './components/MyCoursesPage';
 import CourseDetailPage from './components/CourseDetailPage';
-import CertificatePage from './components/CertificatePage'; // <-- 1. IMPOR HALAMAN BARU
+import CertificatePage from './components/CertificatePage';
+import ProfilePage from './components/ProfilePage'; // <-- 1. IMPOR HALAMAN BARU
 
 // --- Komponen Halaman Utama ---
 function HomePage() {
@@ -67,11 +68,9 @@ function NavigationBar() {
         <li className="nav-item">
           <a href="/#courses" className="nav-link">Courses</a>
         </li>
-        <li className="nav-item">
-          <Link to="/my-courses" className="nav-link">My Courses</Link>
-        </li>
         
         {!username ? (
+          // --- TAMPILAN JIKA BELUM LOGIN ---
           <>
             <li className="nav-item">
               <Link to="/login" className="nav-link">Login</Link>
@@ -81,7 +80,17 @@ function NavigationBar() {
             </li>
           </>
         ) : (
+          // --- TAMPILAN JIKA SUDAH LOGIN ---
           <>
+            <li className="nav-item">
+              <Link to="/my-courses" className="nav-link">My Courses</Link>
+            </li>
+            
+            {/* ▼▼▼ 2. TAMBAHKAN LINK PROFIL DI SINI ▼▼▼ */}
+            <li className="nav-item">
+              <Link to="/profile" className="nav-link">Profile</Link>
+            </li>
+            
             <li className="nav-item nav-profile">
               <div className="avatar-circle">
                 <span className="avatar-initials">{getInitials(username)}</span>
@@ -95,6 +104,7 @@ function NavigationBar() {
             </li>
           </>
         )}
+        
       </ul>
     </nav>
   );
@@ -114,9 +124,10 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/my-courses" element={<MyCoursesPage />} />
             <Route path="/course/:id" element={<CourseDetailPage />} />
-            
-            {/* ▼▼▼ 2. TAMBAHKAN RUTE BARU INI ▼▼▼ */}
             <Route path="/certificate/:id" element={<CertificatePage />} />
+            
+            {/* ▼▼▼ 3. TAMBAHKAN RUTE BARU DI SINI ▼▼▼ */}
+            <Route path="/profile" element={<ProfilePage />} />
             
           </Routes>
         </main>

@@ -1,11 +1,10 @@
 /* src/components/CourseDetailPage.css */
-/* GANTI TOTAL ISINYA */
 
 .course-detail-container {
   max-width: 900px;
   margin: 2rem auto;
   padding: 0 2rem;
-  text-align: left;
+  text-align: left; /* <-- PENTING: Paksa rata kiri */
 }
 
 .course-detail-header {
@@ -14,6 +13,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   margin-bottom: 2rem;
+  text-align: left; /* Paksa rata kiri */
 }
 
 .course-detail-header h2 {
@@ -47,8 +47,84 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   margin-bottom: 3rem;
+  text-align: left; /* <-- PENTING: Paksa rata kiri */
 }
 
+.course-content h3 {
+  font-size: 1.8rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left; /* Paksa rata kiri */
+}
+
+.course-content h4 {
+  font-size: 1.4rem;
+  color: #3D52A0;
+  margin-top: 2rem;
+  text-align: left; /* Paksa rata kiri */
+}
+
+.course-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.reading-passage {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 1rem;
+  /* Batasi lebar teks agar nyaman dibaca */
+  max-width: 75ch; 
+}
+
+/* Tombol Mulai Kuis */
+.start-quiz-button {
+  text-decoration: none;
+  color: #fff;
+  background-color: #18D26E; /* Hijau */
+  padding: 0.8rem 1.8rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  
+  /* ▼▼▼ PERBAIKAN TOMBOL ▼▼▼ */
+  display: inline-block; /* Jangan penuhi layar */
+  width: auto; /* Lebar otomatis */
+}
+
+.start-quiz-button:hover {
+  background-color: #15b35e;
+}
+
+/* Tombol Kembali ke Materi */
+.back-to-material-button {
+  text-decoration: none;
+  color: #555;
+  background-color: #f4f7f6;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1.5rem;
+  display: inline-block; /* Tambahkan ini */
+  width: auto; /* Tambahkan ini */
+}
+
+.back-to-material-button:hover {
+  background-color: #e9ecef;
+}
+
+/* Pesan Loading */
 .loading-message {
   font-size: 1.2rem;
   color: #555;
