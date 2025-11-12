@@ -2,17 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom'; // Impor Link
 import './CourseDetailPage.css';
-import Quiz from './Quiz'; // Impor komponen Kuis
+// Kita tidak lagi mengimpor Quiz.js di sini
 
 function CourseDetailPage() {
-  const [course, setCourse] = useState(null);
+  const [course, setCourse] = useState(null); // State untuk detail kursus
+  const [quizPackets, setQuizPackets] = useState([]); // State BARU untuk daftar paket
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [showQuiz, setShowQuiz] = useState(false);
   
-  const { id } = useParams();
+  const { id } = useParams(); // Ini adalah courseId
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,98 +22,67 @@ function CourseDetailPage() {
       return;
     }
 
-    const fetchCourseDetails = async () => {
+    // Fungsi untuk mengambil detail kursus DAN paket soalnya
+    const fetchCourseData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-        // Kita gunakan API Gateway
-        const response = await axios.get(`http://localhost:8000/api/courses/${id}`);
-        setCourse(response.data);
+        // 1. Ambil detail kursus (Sama seperti sebelumnya)
+        const courseRes = await axios.get(`http://localhost:8000/api/courses/${id}`);
+        setCourse(courseRes.data);
+
+        // 2. Ambil daftar paket soal (Endpoint BARU)
+        const quizRes = await axios.get(`http://localhost:8000/api/assessment/quizzes/by-course/${id}`);
+        setQuizPackets(quizRes.data);
+
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching course details:", err);
-        setError("Failed to load course details.");
+        console.error("Error fetching course data:", err);
         setLoading(false);
       }
     };
-    fetchCourseDetails();
+
+    fetchCourseData();
   }, [id, navigate]);
 
   if (loading) {
     return <div className="loading-message">Loading course...</div>;
   }
-  if (error) {
-    return <div className="loading-message">{error}</div>;
-  }
   if (!course) {
     return <div className="loading-message">Course not found.</div>;
   }
 
-  // Tampilkan halaman kursus
+  // Tampilkan halaman detail kursus
   return (
     <div className="course-detail-container">
+      {/* Header Halaman (Info Kursus) */}
       <header className="course-detail-header">
         <span className="course-category">{course.category}</span>
         <h2>{course.title}</h2>
         <p>{course.description}</p>
       </header>
 
+      {/* Konten Halaman (Daftar Paket Soal) */}
       <div className="course-content">
-      
-        {!showQuiz ? (
-          
-          // --- TAMPILAN MATERI (BARU) ---
-          <>
-            <h3>Course Materials</h3>
-            <h4>Reading Passage 1: Echolocation</h4>
-            <p className="reading-passage">
-              Echolocation is a fascinating biological sonar used by several animals,
-              such as bats, dolphins, and whales. These animals emit
-              calls out to the environment and listen to the **echoes** of those
-              calls that return from various objects near them. They use these
-              echoes to locate and identify the objects. Echolocation is used for
-              navigation, finding prey, and avoiding obstacles, especially in
-              environments where vision is limited, such as the deep sea or in
-              complete darkness.
-            </p>
-            <p className="reading-passage">
-              The process begins when the animal produces a high-frequency sound
-              wave, often ultrasonic, meaning it is above the range of human
-              hearing. These sound waves travel outward and bounce off
-              objects in the vicinity. The returning echoes are captured by the
-              animal's highly sensitive ears. The brain then processes this
-              information with incredible speed, interpreting the time delay,
-              intensity, and frequency shift of the echoes to build a detailed
-              "sonic map" of their surroundings.
-            </p>
-             <p className="reading-passage">
-              The precision of echolocation is remarkable. Using this ability,
-              bats can detect objects as thin as a human hair or hunt tiny
-              insects like mosquitoes in total darkness. Similarly, dolphins
-              can distinguish between different types of fish or even locate
-              objects buried in the sand on the ocean floor. This complex sensory
-              system is a powerful example of evolutionary adaptation, allowing
-              these species to thrive in ecological niches unavailable to
-              animals that rely solely on vision.
-            </p>
-            
-            {/* Tombol untuk memulai kuis */}
-            <button onClick={() => setShowQuiz(true)} className="start-quiz-button">
-              Mulai Kuis
-            </button>
-          </>
-          
-        ) : (
-          
-          // --- TAMPILAN KUIS ---
-          <>
-            <Quiz courseId={id} courseTitle={course.title} />
-            {/* Tombol untuk kembali ke materi */}
-            <button onClick={() => setShowQuiz(false)} className="back-to-material-button">
-              Kembali ke Materi
-            </button>
-          </>
-        )}
+        <h3>Available Quiz Packets</h3>
         
+        {/* Cek apakah ada paket soal */}
+        {quizPackets.length === 0 ? (
+          <p className="loading-message">No quiz packets available for this course yet.</p>
+        ) : (
+          <div className="quiz-packet-list">
+            {/* Loop dan tampilkan setiap paket soal */}
+            {quizPackets.map(packet => (
+              <Link 
+                to={`/quiz/${packet.quiz_id}`} 
+                key={packet.quiz_id} 
+                className="quiz-packet-link"
+              >
+                {packet.title}
+                <span>Start Quiz &rarr;</span>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

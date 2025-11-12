@@ -12,7 +12,8 @@ import LoginPage from './components/LoginPage';
 import MyCoursesPage from './components/MyCoursesPage';
 import CourseDetailPage from './components/CourseDetailPage';
 import CertificatePage from './components/CertificatePage';
-import ProfilePage from './components/ProfilePage'; // <-- 1. IMPOR HALAMAN BARU
+import ProfilePage from './components/ProfilePage';
+import QuizPage from './components/QuizPage'; // <-- 1. IMPOR HALAMAN KUIS BARU
 
 // --- Komponen Halaman Utama ---
 function HomePage() {
@@ -32,7 +33,6 @@ function HomePage() {
   );
 }
 // --- Selesai komponen Halaman Utama ---
-
 
 // --- Komponen Navbar (Dengan Avatar) ---
 function NavigationBar() {
@@ -85,12 +85,9 @@ function NavigationBar() {
             <li className="nav-item">
               <Link to="/my-courses" className="nav-link">My Courses</Link>
             </li>
-            
-            {/* ▼▼▼ 2. TAMBAHKAN LINK PROFIL DI SINI ▼▼▼ */}
             <li className="nav-item">
               <Link to="/profile" className="nav-link">Profile</Link>
             </li>
-            
             <li className="nav-item nav-profile">
               <div className="avatar-circle">
                 <span className="avatar-initials">{getInitials(username)}</span>
@@ -111,7 +108,6 @@ function NavigationBar() {
 }
 // --- Selesai komponen Navbar ---
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -125,9 +121,10 @@ function App() {
             <Route path="/my-courses" element={<MyCoursesPage />} />
             <Route path="/course/:id" element={<CourseDetailPage />} />
             <Route path="/certificate/:id" element={<CertificatePage />} />
-            
-            {/* ▼▼▼ 3. TAMBAHKAN RUTE BARU DI SINI ▼▼▼ */}
             <Route path="/profile" element={<ProfilePage />} />
+            
+            {/* ▼▼▼ 2. TAMBAHKAN RUTE BARU DI SINI ▼▼▼ */}
+            <Route path="/quiz/:quizId" element={<QuizPage />} />
             
           </Routes>
         </main>

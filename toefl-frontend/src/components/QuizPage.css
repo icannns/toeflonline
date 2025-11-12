@@ -1,11 +1,54 @@
-/* src/components/Quiz.css */
+/* src/components/QuizPage.css */
 
-.quiz-container {
-  margin-top: 2rem;
-  border-top: 2px solid #eee;
-  padding-top: 1.5rem;
+.quiz-page-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  text-align: left; /* <-- PERBAIKAN 1: Paksa rata kiri */
 }
 
+.quiz-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1.5rem;
+  text-align: left; /* <-- PERBAIKAN 2: Paksa rata kiri */
+}
+
+.back-link {
+  text-decoration: none;
+  color: #3D52A0;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.quiz-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.quiz-content-box {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 3rem;
+  text-align: left; /* <-- PERBAIKAN 3: Paksa rata kiri */
+}
+
+.loading-message {
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center; /* (Biarkan ini center) */
+  padding: 4rem;
+}
+
+/* Style Kuis */
 .question-block-quiz {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
@@ -34,14 +77,6 @@
   gap: 0.5rem;
 }
 
-.option-label input[type="radio"] {
-  /* Style radio button kustom jika diinginkan */
-}
-
-.option-label:hover {
-  background-color: #f9f9f9;
-}
-
 .submit-quiz-button {
   text-decoration: none;
   color: #fff;
@@ -60,12 +95,10 @@
   background-color: #15b35e;
 }
 
-/* Hasil Skor */
+/* Style Hasil Kuis */
 .quiz-results {
-  text-align: center;
-  padding: 2rem;
-  background-color: #f4f7f6;
-  border-radius: 12px;
+  text-align: center; /* (Biarkan ini center) */
+  padding: 2rem 0;
 }
 
 .quiz-results h3 {
@@ -89,7 +122,7 @@
 .certificate-button {
   text-decoration: none;
   color: #fff;
-  background-color: #3D52A0; /* Biru */
+  background-color: #3D52A0;
   padding: 0.8rem 1.8rem;
   border: none;
   border-radius: 8px;
@@ -103,10 +136,7 @@
 
 .certificate-button:hover {
   background-color: #314380;
-  transform: translateY(-2px);
 }
-
-/* src/components/Quiz.css (Tambahkan di bagian bawah) */
 
 .review-answers-button {
   text-decoration: none;
@@ -129,7 +159,7 @@
 
 .answer-review-container {
   margin-top: 2rem;
-  text-align: left;
+  text-align: left; /* (Sudah benar) */
   border-top: 1px solid #ddd;
   padding-top: 1rem;
 }
@@ -151,12 +181,12 @@
 }
 
 .review-answer.correct {
-  color: #18D26E; /* Hijau */
+  color: #18D26E;
   font-weight: 500;
 }
 
 .review-answer.incorrect {
-  color: #D9534F; /* Merah */
+  color: #D9534F;
   font-weight: 500;
   text-decoration: line-through;
 }
